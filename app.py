@@ -30,6 +30,8 @@ from renderers.intelligence.design_readiness_renderer import build_design_readin
 from renderers.intelligence.scenario_comparison_renderer import build_scenario_comparison_html
 from renderers.intelligence.architecture_recommendations_renderer import build_architecture_recommendations_html
 from renderers.auto_apply_renderer import build_auto_apply_html
+from renderers.branch_results_renderer import build_branch_results_html
+from renderers.operating_modes_renderer import build_operating_modes_html
 
 
 def _legacy_to_dict(value):
@@ -1306,102 +1308,9 @@ def build_results_html(result, export_paths=None):
     else:
         html += "<p>No warnings.</p>"
 
-    html += "<h2>Branch Results</h2>"
-    html += "<table>"
+    html += build_branch_results_html(manifold)
 
-    html += """
-<tr>
-<th>Branch</th>
-<th>Role</th>
-<th>Priority</th>
-<th>Pipe</th>
-<th>Base Length</th>
-<th>Fitting Eq. Length</th>
-<th>Total Effective Length</th>
-<th>Fittings</th>
-<th>Elevation</th>
-<th>Flow</th>
-<th>Velocity</th>
-<th>Friction Loss</th>
-<th>Total TDH</th>
-<th>Pump PSI</th>
-<th>Final PSI</th>
-<th>Required PSI</th>
-<th>Margin</th>
-<th>Passed</th>
-</tr>
-"""
-
-    for branch in manifold["branch_results"]:
-        pump_operating = branch.get("pump_operating_point", {})
-
-        fittings_text = (
-            f"90s: {branch.get('elbow_90_qty', 0)}<br>"
-            f"45s: {branch.get('elbow_45_qty', 0)}<br>"
-            f"Sweeps: {branch.get('sweep_bend_qty', 0)}<br>"
-            f"Tees: {branch.get('tee_qty', 0)}<br>"
-            f"Valves: {branch.get('valve_qty', 0)}<br>"
-            f"Other: {branch.get('other_equivalent_length_ft', 0)} ft"
-        )
-
-        html += "<tr>"
-        html += f"<td>{branch['branch_number']}</td>"
-        html += f"<td>{branch['role']}</td>"
-        html += f"<td>{branch['priority']}</td>"
-        html += f"<td>{branch['pipe_name']}</td>"
-        html += f"<td>{branch.get('base_pipe_length_ft', branch.get('pipe_length_ft', 0)):.2f} ft</td>"
-        html += f"<td>{branch.get('equivalent_length_ft', 0):.2f} ft</td>"
-        html += f"<td>{branch.get('effective_pipe_length_ft', branch.get('pipe_length_ft', 0)):.2f} ft</td>"
-        html += f"<td>{fittings_text}</td>"
-        html += f"<td>{branch['elevation_change_ft']} ft</td>"
-        html += f"<td>{branch['flow']['total_flow_gpm']:.2f} GPM</td>"
-        html += f"<td>{branch.get('velocity_fps', 0):.2f} ft/s</td>"
-        html += f"<td>{branch.get('friction_loss_psi', 0):.2f} PSI</td>"
-        html += f"<td>{branch.get('total_dynamic_head_ft', 0):.2f} ft</td>"
-        html += f"<td>{pump_operating.get('pressure_psi', 0):.2f} PSI</td>"
-        html += f"<td>{branch['final_pressure_psi']:.2f}</td>"
-        html += f"<td>{branch['required_terminal_pressure_psi']:.2f}</td>"
-        html += f"<td>{branch['pressure_margin_psi']:.2f}</td>"
-        html += f"<td>{branch['passed']}</td>"
-        html += "</tr>"
-
-    html += "</table>"
-
-    modes = manifold["operating_modes"]["modes"]
-
-    html += "<h2>Operating Mode Checks</h2>"
-    html += "<table>"
-
-    html += """
-<tr>
-<th>Mode</th>
-<th>Passed</th>
-<th>Branches</th>
-<th>Total Flow</th>
-<th>Pump PSI</th>
-<th>Pump Utilization</th>
-<th>Worst Branch</th>
-<th>Worst Margin</th>
-</tr>
-"""
-
-    for mode in modes:
-        worst = mode.get("worst_branch")
-        worst_branch_number = worst["branch_number"] if worst else "N/A"
-        worst_margin = f"{worst['pressure_margin_psi']:.2f} PSI" if worst else "N/A"
-
-        html += "<tr>"
-        html += f"<td>{mode['mode_name']}</td>"
-        html += f"<td>{mode['passed']}</td>"
-        html += f"<td>{mode['branch_count']}</td>"
-        html += f"<td>{mode['total_flow_gpm']:.2f} GPM</td>"
-        html += f"<td>{mode.get('pump_operating_pressure_psi', 0):.2f} PSI</td>"
-        html += f"<td>{mode.get('pump_flow_utilization_fraction', 0) * 100:.1f}%</td>"
-        html += f"<td>{worst_branch_number}</td>"
-        html += f"<td>{worst_margin}</td>"
-        html += "</tr>"
-
-    html += "</table>"
+    html += build_operating_modes_html(manifold)
 
     html += "<h2>Selected Components / Cut Sheet Starter</h2>"
     html += "<table>"
