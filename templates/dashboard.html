@@ -1,35 +1,37 @@
 {% extends "base.html" %}
+
 {% block content %}
 
 <div class="card">
 
     <h2>FLD System Builder</h2>
 
-    <p><strong>Primary workflow: Run Optimizer → Generate System Design</strong></p>
-
-    <div style="padding:12px; border:2px solid #1a73e8; margin:15px 0;">
-        <h3>⚡ START HERE</h3>
-        <a href="/optimizer" style="font-size:18px;">
-            ▶ Run Optimizer (Begin System Design)
+    <!-- PRIMARY ENTRY POINT -->
+    <div style="padding:16px; border:3px solid #1a73e8; margin:20px 0; background:#f5f9ff;">
+        <h2>⚡ START HERE</h2>
+        <p><strong>Primary workflow: Run Optimizer → Generate System Design</strong></p>
+        <a href="/optimizer" style="font-size:20px;">
+            ▶ Launch Optimizer
         </a>
     </div>
 
-    <h3>Workflow Tools</h3>
+    <!-- SECONDARY TOOLS -->
+    <h3>Workflow</h3>
     <ul>
-        <li><a href="/optimizer">Optimizer</a></li>
         <li><a href="/project-report">Project Report Generator</a></li>
-        <li><a href="/workflow">Workflow Hub</a></li>
         <li><a href="/projects">Saved Projects</a></li>
+        <li><a href="/workflow">Workflow Hub</a></li>
     </ul>
 
-    <h3>System Components</h3>
+    <h3>System Reference</h3>
     <ul>
         <li><a href="/components">Component Library</a></li>
     </ul>
 
-    <h3 style="opacity:0.6;">Legacy System</h3>
+    <!-- LEGACY -->
+    <h3 style="opacity:0.5;">Advanced / Legacy</h3>
     <ul>
-        <li><a href="/builder-v27">Full Builder (Advanced / Legacy)</a></li>
+        <li><a href="/builder-v27">Full Builder (Legacy Mode)</a></li>
     </ul>
 
 </div>
