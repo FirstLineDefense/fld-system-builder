@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect
 
 core_bp = Blueprint("core", __name__)
 
 
 @core_bp.route("/")
 def dashboard():
-    return render_template("dashboard.html")
+    return redirect("/optimizer")
 
 
 @core_bp.route("/tools")
@@ -15,4 +15,4 @@ def tools():
 
 @core_bp.route("/health")
 def health():
-    return {"status": "ok", "app": "FLD System Builder"}
+    return "ok", 200
