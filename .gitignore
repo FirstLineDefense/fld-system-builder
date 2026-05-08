@@ -14,3 +14,12 @@ exports/
 runtime_data/
 
 *.bak
+
+*_diff.txt
+root_import_scan.txt
+renderer_diff.txt
+route_content_diff.txt
+service_diff.txt
+static_diff.txt
+template_content_diff.txt
+webapp_diff.txt
