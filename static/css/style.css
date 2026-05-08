@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f8;
+    color: #222;
+}
+
+header {
+    background: #18212b;
+    color: white;
+    padding: 18px 28px;
+}
+
+nav {
+    background: #263442;
+    padding: 12px 28px;
+}
+
+nav a {
+    color: white;
+    margin-right: 22px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    padding: 28px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th, td {
+    border: 1px solid #d8dde3;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #edf1f5;
+}
+
+.proposal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.proposal-title-block h1 {
+    margin-bottom: 6px;
+}
+
+.proposal-total {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 18px;
+    border: 2px solid #222;
+    border-radius: 8px;
+    text-align: right;
+}
+
+.proposal-note {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+@media print {
+    nav,
+    .no-print {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+}

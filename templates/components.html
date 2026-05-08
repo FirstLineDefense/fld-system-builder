@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>Components</h2>
+    <p>Current component library used by the report BOM.</p>
+
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Item</th>
+            <th>Unit Cost</th>
+            <th>Notes</th>
+        </tr>
+        {% for key, component in components.items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ component.item }}</td>
+            <td>{{ component.unit_cost|money }}</td>
+            <td>{{ component.notes }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

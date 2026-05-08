@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 24px;
+    color: #222;
+    background: #f5f5f5;
+}
+
+.report-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+}
+
+.report-controls {
+    margin-bottom: 20px;
+}
+
+
+.proposal-header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 12px;
+}
+
+.proposal-footer {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+
+.pricing-block {
+    border-top: 2px solid #ddd;
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.pricing-block h2 {
+    margin-bottom: 10px;
+}
+
+.pricing-block ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pricing-block li {
+    padding: 2px 0;
+}

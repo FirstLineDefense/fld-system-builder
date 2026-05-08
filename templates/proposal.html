@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page">
+    <div class="proposal-header">
+        <div class="proposal-title-block">
+            <h1>FLD Client Proposal</h1>
+            <p class="proposal-note">Preliminary system proposal based on current project inputs.</p>
+            <p class="proposal-note">Generated from saved FLD Builder project file: {{ filename }}</p>
+        </div>
+
+        <div class="proposal-total">
+            {{ project.client_proposal_total|money }}
+            <div class="proposal-note">Estimated Proposal Total</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>{{ project.project_name }}</h2>
+        <p><strong>Client:</strong> {{ project.client or project.client_name or 'Client TBD' }}</p>
+        <p><strong>Recommended Tier:</strong> {{ project.optimizer_recommendation.tier }}</p>
+        <p>{{ project.optimizer_recommendation.notes }}</p>
+    </div>
+
+    <div class="card">
+        <h2>System Design Summary</h2>
+        <p><strong>Target Flow:</strong> {{ project.target_gpm }} GPM</p>
+        <p><strong>Target Pressure:</strong> {{ project.target_psi }} PSI</p>
+        <p><strong>Elevation Gain:</strong> {{ project.elevation_gain_ft }} ft</p>
+        <p><strong>Elevation Pressure Loss:</strong> {{ project.elevation_psi_loss }} PSI</p>
+        <p><strong>Required Pump Pressure:</strong> {{ project.required_pump_psi }} PSI</p>
+        <p><strong>Hydraulic Horsepower:</strong> {{ project.hydraulic_hp }} HP</p>
+    </div>
+
+    <div class="card">
+        <h2>Client Pricing Summary</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Client BOM Total</td>
+                    <td>{{ project.client_bom_total|money }}</td>
+                </tr>
+                <tr>
+                    <td>Design Total</td>
+                    <td>{{ project.design_total|money }}</td>
+                </tr>
+                <tr>
+                    <td>Maintenance Plan Fee</td>
+                    <td>{{ project.maintenance_plan_fee|money }}</td>
+                </tr>
+                <tr>
+                    <td>Subscription Cost</td>
+                    <td>{{ project.subscription_cost|money }}</td>
+                </tr>
+                <tr>
+                    <th>Estimated Client Proposal Total</th>
+                    <th>{{ project.client_proposal_total|money }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Bill of Materials</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Client Unit Price</th>
+                    <th>Client Total</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in project.bom %}
+                <tr>
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.client_unit_price|money }}</td>
+                    <td>{{ item.client_total|money }}</td>
+                    <td>{{ item.notes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Proposal Notes</h2>
+        <p>This proposal is a preliminary planning and estimating document. Final equipment selection, pricing, pipe routing, hydraulic sizing, and installation scope should be confirmed after site review and final design validation.</p>
+    </div>
+
+    <div class="no-print">
+        <button onclick="window.print()">Print Proposal</button>
+        <p><a href="/projects/{{ filename }}/proposal.csv">Download Proposal CSV</a></p>
+        <p><a href="/projects/{{ filename }}/bom.csv">Download BOM CSV</a></p>
+        <p><a href="/projects/{{ filename }}">Back to Saved Project</a></p>
+    </div>
+</section>
+{% endblock %}
