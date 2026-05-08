@@ -37,6 +37,7 @@ from renderers.storage_power_renderer import build_storage_power_html
 from renderers.engineering_recommendations_renderer import build_engineering_recommendations_html
 from renderers.optimizer_recommendation_renderer import build_optimizer_recommendation_html
 from renderers.hydraulic_intelligence_renderer import build_hydraulic_intelligence_html
+from renderers.system_curve_overlay_renderer import build_system_curve_overlay_html
 
 
 def _legacy_to_dict(value):
@@ -924,77 +925,6 @@ def build_hydraulic_optimizer_html(primary):
     return html
 
 
-def build_system_curve_overlay_html(primary):
-    pump = primary.get("pump")
-    manifold = primary.get("manifold", {})
-
-    if not pump:
-        return "<h2>System Operating Point Overlay</h2><p>No pump selected.</p>"
-
-    max_mode = manifold.get("operating_modes", {}).get("max_simultaneous_mode", {})
-    pump_analysis = max_mode.get("pump_operating_analysis", {})
-
-    operating_flow = pump_analysis.get(
-        "operating_flow_gpm",
-        manifold.get("total_flow_gpm", 0)
-    )
-
-    operating_pressure = pump_analysis.get(
-        "operating_pressure_psi",
-        manifold.get("pump_operating_pressure_psi", 0)
-    )
-
-    worst_branch = max_mode.get("worst_branch") or manifold.get("worst_branch")
-
-    required_pressure = 0
-
-    if worst_branch:
-        required_pressure = (
-            worst_branch.get("required_terminal_pressure_psi", 0)
-            + worst_branch.get("total_pressure_loss_psi", 0)
-            + worst_branch.get("minimum_pressure_margin_psi", 0)
-        )
-
-    curve_data = get_pump_curve_points(pump)
-
-    operating_point = {
-        "flow_gpm": operating_flow,
-        "pressure_psi": operating_pressure
-    }
-
-    required_point = {
-        "flow_gpm": operating_flow,
-        "pressure_psi": required_pressure
-    }
-
-    svg = build_curve_svg(
-        curve_data.get("curve_points", []),
-        operating_point=operating_point,
-        required_point=required_point
-    )
-
-    pressure_surplus = operating_pressure - required_pressure
-
-    html = "<h2>System Operating Point Overlay</h2>"
-    html += "<p>This chart shows the selected system’s operating point against the pump curve.</p>"
-    html += f"<p><strong>Pump:</strong> {pump.name}</p>"
-    html += f"<p><strong>Curve Source:</strong> {curve_data.get('curve_source')}</p>"
-    html += f"<p><strong>Operating Flow:</strong> {operating_flow:.2f} GPM</p>"
-    html += f"<p><strong>Operating Pump Pressure:</strong> {operating_pressure:.2f} PSI</p>"
-    html += f"<p><strong>Estimated Required Pump Pressure:</strong> {required_pressure:.2f} PSI</p>"
-    html += f"<p><strong>Estimated Pump Pressure Surplus:</strong> {pressure_surplus:.2f} PSI</p>"
-
-    if pressure_surplus < 0:
-        html += "<p><strong>Overlay Warning:</strong> Operating pressure is below estimated required pump pressure.</p>"
-    elif pressure_surplus < 10:
-        html += "<p><strong>Overlay Warning:</strong> Operating pressure surplus is thin.</p>"
-
-    if pump_analysis.get("flow_utilization_fraction", 0) > 0.85:
-        html += "<p><strong>Overlay Warning:</strong> Pump is operating near the high end of its flow range.</p>"
-
-    html += svg
-
-    return html
 
 
 
