@@ -1,8 +1,5 @@
 from flask import Blueprint, request
 
-from flask_app import app as legacy_app
-
-
 legacy_builder_bp = Blueprint("legacy_builder", __name__)
 
 
@@ -20,6 +17,8 @@ def normalize_legacy_html(html):
 
 @legacy_builder_bp.route("/builder-v27", methods=["GET", "POST"])
 def builder_v27():
+    from flask_app import app as legacy_app
+
     with legacy_app.test_request_context("/", method=request.method, data=request.form):
         response = legacy_app.full_dispatch_request()
 
