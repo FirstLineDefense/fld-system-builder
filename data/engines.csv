@@ -1,0 +1,4 @@
+name,component_type,unit_cost,notes,fuel_type,horsepower,fuel_burn_gph
+Vanguard 23 HP Propane EFI,engine,2500,,propane,23,1.8
+Kohler CH1000 Propane EFI,engine,5200,,propane,37,3.0
+Kubota D902 Diesel,engine,8500,,diesel,24,1.4

@@ -1,0 +1,4 @@
+name,component_type,unit_cost,notes,continuous_kw,surge_kw,fuel_type
+12 kW Propane Generator,generator,5500,,12,15,propane
+30 kW Propane Generator,generator,14000,,30,40,propane
+50 kW Diesel Generator,generator,26000,,50,65,diesel

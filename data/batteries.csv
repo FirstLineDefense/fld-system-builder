@@ -1,0 +1,4 @@
+name,component_type,unit_cost,notes,capacity_kwh,usable_fraction
+10 kWh Battery Bank,battery,6000,,10,0.8
+30 kWh Battery Bank,battery,15000,,30,0.8
+50 kWh Battery Bank,battery,24000,,50,0.8

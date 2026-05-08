@@ -1,0 +1,4 @@
+name,component_type,unit_cost,notes,horsepower,voltage,phase,efficiency
+15 HP TEFC Electric Motor,motor,2200,,15,230,single,0.90
+30 HP TEFC Electric Motor,motor,4200,,30,230,three,0.92
+50 HP TEFC Electric Motor,motor,7500,,50,480,three,0.93

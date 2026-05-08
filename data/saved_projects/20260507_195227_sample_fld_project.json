@@ -1,0 +1,71 @@
+{
+  "project_name": "Sample FLD Project",
+  "client_name": "Client TBD",
+  "water_source": "Pool",
+  "target_gpm": 295.0,
+  "target_psi": 100.0,
+  "elevation_gain_ft": 100.0,
+  "elevation_psi_loss": 43.3,
+  "required_pump_psi": 143.3,
+  "hydraulic_hp": 24.7,
+  "markup_percent": 50.0,
+  "design_hours": 12.0,
+  "design_hourly_rate": 150.0,
+  "design_total": 1800.0,
+  "maintenance_plan_fee": 1500.0,
+  "subscription_cost": 600.0,
+  "bom": [
+    {
+      "item": "Self-Priming Pump Package",
+      "qty": 1,
+      "unit_cost": 4500,
+      "internal_total": 4500,
+      "client_unit_price": 6750.0,
+      "client_total": 6750.0,
+      "notes": "Sized from target flow, pressure, and elevation estimate"
+    },
+    {
+      "item": "Primary Manifold Assembly",
+      "qty": 1,
+      "unit_cost": 1250,
+      "internal_total": 1250,
+      "client_unit_price": 1875.0,
+      "client_total": 1875.0,
+      "notes": "Zone distribution manifold placeholder"
+    },
+    {
+      "item": "Sprinkler / Nozzle Heads",
+      "qty": 8,
+      "unit_cost": 95,
+      "internal_total": 760,
+      "client_unit_price": 142.5,
+      "client_total": 1140.0,
+      "notes": "Placeholder count based on early test layout"
+    },
+    {
+      "item": "Schedule 80 PVC Main Runs",
+      "qty": 300,
+      "unit_cost": 6,
+      "internal_total": 1800,
+      "client_unit_price": 9.0,
+      "client_total": 2700.0,
+      "notes": "Placeholder footage. Final length depends on site plan"
+    },
+    {
+      "item": "Control / Activation Package",
+      "qty": 1,
+      "unit_cost": 1800,
+      "internal_total": 1800,
+      "client_unit_price": 2700.0,
+      "client_total": 2700.0,
+      "notes": "V2 remote operation and system health baseline"
+    }
+  ],
+  "internal_bom_total": 10110,
+  "client_bom_total": 15165.0,
+  "client_proposal_total": 19065.0,
+  "optimizer_recommendation": {
+    "tier": "High-output pump package",
+    "notes": "Current estimate suggests a stronger pump package is likely needed because pressure and HP demand are high."
+  }
+}

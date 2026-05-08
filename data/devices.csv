@@ -1,0 +1,16 @@
+name,component_type,unit_cost,notes,flow_gpm,required_pressure_psi,nozzle_size,throw_diameter_ft
+Sprinkler Standard,terminal,150,Baseline placeholder device,25,50,standard,150
+Aqualine I125A - Low Flow,terminal,250,Aqualine I125A placeholder low-flow setting,33,50,small,120
+Aqualine I125A - Medium Flow,terminal,250,Aqualine I125A placeholder medium-flow setting,60,70,medium,150
+Aqualine I125A - High Flow,terminal,250,Aqualine I125A placeholder high-flow setting,100,90,large,175
+Nelson Big Gun F75,terminal,700,Nelson 75 series placeholder,50,60,varies,150
+Nelson Big Gun SR75,terminal,750,Nelson 75 series part-circle placeholder,50,60,varies,150
+Nelson Big Gun F100,terminal,1200,Nelson 100 series placeholder,100,70,varies,200
+Nelson Big Gun SR100,terminal,1300,Nelson 100 series part-circle placeholder,100,70,varies,200
+Nelson Big Gun F150,terminal,2200,Nelson 150 series placeholder,200,80,varies,250
+Nelson Big Gun SR150,terminal,2400,Nelson 150 series part-circle placeholder,200,80,varies,250
+Nelson Big Gun F200,terminal,4500,Nelson 200 series placeholder,400,100,varies,300
+Nelson Big Gun SR200,terminal,4800,Nelson 200 series part-circle placeholder,400,100,varies,300
+ESSE High Pressure Vortex - Small,terminal,500,High-pressure vortex placeholder,10,150,small_vortex,60
+ESSE High Pressure Vortex - Medium,terminal,700,High-pressure vortex placeholder,20,180,medium_vortex,80
+ESSE High Pressure Vortex - Large,terminal,900,High-pressure vortex placeholder,40,200,large_vortex,100
