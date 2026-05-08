@@ -1,12 +1,15 @@
 from flask import Blueprint, request
 
+from main import run_system, run_auto_update
+from export_utils import write_export_files
+from app import build_system_builder_page
+
 legacy_builder_bp = Blueprint("legacy_builder", __name__)
 
 
 def normalize_legacy_html(html):
-    # Force every legacy form post to come back to the Flask bridge route.
     html = html.replace('<form method="post">', '<form method="post" action="/builder-v27">')
-    html = html.replace("<form method='post'>", "<form method='post' action='/builder-v27'>")
+    html = html.replace("<form method='post'>", "<form method='post' action=\"/builder-v27\">")
     html = html.replace('<form method="POST">', '<form method="POST" action="/builder-v27">')
     html = html.replace('action="/"', 'action="/builder-v27"')
     html = html.replace("action='/'", "action='/builder-v27'")
@@ -15,11 +18,84 @@ def normalize_legacy_html(html):
     return html
 
 
+def _form_to_dict(form):
+    return {
+        k: form.getlist(k)[0] if isinstance(form.getlist(k), list) else form.get(k)
+        for k in form.keys()
+    }
+
+
+def _normalize_types(data):
+    """
+    80/20 type safety layer so legacy engine receives correct types.
+    """
+
+    def to_int(v):
+        try:
+            return int(v)
+        except Exception:
+            return 0
+
+    def to_float(v):
+        try:
+            return float(v)
+        except Exception:
+            return 0.0
+
+    if "required_runtime_minutes" in data:
+        data["required_runtime_minutes"] = to_int(data["required_runtime_minutes"])
+
+    if "available_water_gallons" in data:
+        data["available_water_gallons"] = to_int(data["available_water_gallons"])
+
+    if "max_budget" in data:
+        data["max_budget"] = to_float(data["max_budget"])
+
+    return data
+
+
 @legacy_builder_bp.route("/builder-v27", methods=["GET", "POST"])
 def builder_v27():
-    from app import build_system_builder_page
+    resume_file = request.args.get("resume")
 
     if request.method == "GET":
-        return normalize_legacy_html(build_system_builder_page())
 
-    return "Legacy builder POST bridge not restored yet.", 501
+        # optional resume hook (lightweight, safe, non-invasive)
+        if resume_file:
+            try:
+                import json, os
+                path = os.path.join(os.getcwd(), "projects", resume_file)
+                with open(path, "r") as f:
+                    resume_data = json.load(f)
+
+                html = build_system_builder_page(
+                    initial_data=resume_data
+                )
+                return normalize_legacy_html(html)
+            except:
+                pass
+
+        html = build_system_builder_page()
+        return normalize_legacy_html(html)
+
+    form_data = _form_to_dict(request.form)
+    form_data = _normalize_types(form_data)
+
+    result = run_system(form_data)
+
+    if form_data.get("action_code"):
+        auto = run_auto_update(
+            input_data=form_data,
+            action_code=form_data.get("action_code")
+        )
+        result = auto.get("result", result)
+
+    export_paths = write_export_files(form_data, result)
+    result["export_paths"] = export_paths
+
+    html = build_system_builder_page(
+        results=result,
+        initial_data=form_data
+    )
+
+    return normalize_legacy_html(html)

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Workflow Hub</h2>
+
+    <h3>Saved Projects</h3>
+    <ul>
+        {% for p in projects %}
+            <li>
+                <a href="/projects/{{ p._filename }}">
+                    📁 {{ p.project_name if p.project_name else "Unnamed Project" }}
+                </a>
+                |
+                <a href="/builder-v27?resume={{ p._filename }}">↻ Resume</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Generated Reports</h3>
+    <ul>
+        {% for r in reports %}
+            <li>
+                <a href="/projects/{{ r._filename }}/proposal">
+                    📄 {{ r.name }}
+                </a>
+                |
+                <a href="/projects/{{ r._filename }}">Open Project</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

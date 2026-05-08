@@ -14,9 +14,9 @@
         {% for key, component in components.items() %}
         <tr>
             <td>{{ key }}</td>
-            <td>{{ component.item }}</td>
-            <td>{{ component.unit_cost|money }}</td>
-            <td>{{ component.notes }}</td>
+            <td>{{ component.get('item', '') }}</td>
+            <td>{{ component.get('unit_cost', 0)|money }}</td>
+            <td>{{ component.get('notes', '') }}</td>
         </tr>
         {% endfor %}
     </table>

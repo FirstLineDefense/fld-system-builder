@@ -1,15 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card">
-    <h2>FLD System Builder Dashboard</h2>
-    <p>Central workspace for system reports, component review, optimization, saved projects, and proposal exports.</p>
 
+<div class="card">
+
+    <h2>FLD System Builder</h2>
+
+    <p><strong>Primary workflow: Run Optimizer → Generate System Design</strong></p>
+
+    <div style="padding:12px; border:2px solid #1a73e8; margin:15px 0;">
+        <h3>⚡ START HERE</h3>
+        <a href="/optimizer" style="font-size:18px;">
+            ▶ Run Optimizer (Begin System Design)
+        </a>
+    </div>
+
+    <h3>Workflow Tools</h3>
     <ul>
-        <li><a href="/project-report">Create Project Report</a></li>
-        <li><a href="/projects">Saved Projects</a></li>
-        <li><a href="/components">Component Library</a></li>
         <li><a href="/optimizer">Optimizer</a></li>
-        <li><a href="/tools">Tools</a></li>
+        <li><a href="/project-report">Project Report Generator</a></li>
+        <li><a href="/workflow">Workflow Hub</a></li>
+        <li><a href="/projects">Saved Projects</a></li>
     </ul>
+
+    <h3>System Components</h3>
+    <ul>
+        <li><a href="/components">Component Library</a></li>
+    </ul>
+
+    <h3 style="opacity:0.6;">Legacy System</h3>
+    <ul>
+        <li><a href="/builder-v27">Full Builder (Advanced / Legacy)</a></li>
+    </ul>
+
 </div>
+
 {% endblock %}
