@@ -1,0 +1,5 @@
+name,component_type,unit_cost,notes,capacity_gallons,fuel_type
+100 Gallon Propane Tank,fuel_storage,900,,100,propane
+250 Gallon Propane Tank,fuel_storage,1800,,250,propane
+500 Gallon Propane Tank,fuel_storage,3200,,500,propane
+100 Gallon Diesel Tank,fuel_storage,1200,,100,diesel

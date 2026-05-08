@@ -1,0 +1,5 @@
+name,component_type,unit_cost,notes,capacity_gallons,storage_type
+Existing Pool,water_storage,0,,20000,pool
+5000 Gallon Tank,water_storage,5500,,5000,tank
+10000 Gallon Tank,water_storage,9500,,10000,tank
+20000 Gallon Tank,water_storage,17000,,20000,tank

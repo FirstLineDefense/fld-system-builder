@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>Project Report</h2>
+
+    {% if project %}
+        <h3>{{ project.project_name }}</h3>
+        <p><strong>Saved Project File:</strong> {{ project.saved_path }}</p>
+        <p><strong>Client:</strong> {{ project.client_name }}</p>
+        <p><strong>Water Source:</strong> {{ project.water_source }}</p>
+
+        <h3>Design Targets</h3>
+        <p><strong>Target Flow:</strong> {{ project.target_gpm }} GPM</p>
+        <p><strong>Target Pressure at Heads:</strong> {{ project.target_psi }} PSI</p>
+        <p><strong>Elevation Gain:</strong> {{ project.elevation_gain_ft }} ft</p>
+
+        <h3>Hydraulic Estimate</h3>
+        <p><strong>Elevation Pressure Loss:</strong> {{ project.elevation_psi_loss }} PSI</p>
+        <p><strong>Required Pump Pressure:</strong> {{ project.required_pump_psi }} PSI</p>
+        <p><strong>Hydraulic Horsepower:</strong> {{ project.hydraulic_hp }} HP</p>
+
+        <h3>Basic BOM and Pricing</h3>
+        <p><strong>Product Markup:</strong> {{ project.markup_percent }}%</p>
+        <p><strong>Design Hours:</strong> {{ project.design_hours }}</p>
+        <p><strong>Design Hourly Rate:</strong> {{ project.design_hourly_rate|money }}</p>
+        <p><strong>Design Total:</strong> {{ project.design_total|money }}</p>
+        <p><strong>Maintenance Plan Fee:</strong> {{ project.maintenance_plan_fee|money }}</p>
+        <p><strong>Subscription Cost:</strong> {{ project.subscription_cost|money }}</p>
+
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Internal Unit Cost</th>
+                <th>Internal Total</th>
+                <th>Client Unit Price</th>
+                <th>Client Total</th>
+                <th>Notes</th>
+            </tr>
+            {% for row in project.bom %}
+            <tr>
+                <td>{{ row.item }}</td>
+                <td>{{ row.qty }}</td>
+                <td>{{ row.unit_cost|money }}</td>
+                <td>{{ row.internal_total|money }}</td>
+                <td>{{ row.client_unit_price|money }}</td>
+                <td>{{ row.client_total|money }}</td>
+                <td>{{ row.notes }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th colspan="3">BOM Totals</th>
+                <th>{{ project.internal_bom_total|money }}</th>
+                <th></th>
+                <th>{{ project.client_bom_total|money }}</th>
+                <th></th>
+            </tr>
+        </table>
+
+        <h3>Optimizer Recommendation</h3>
+        <p><strong>Recommended Tier:</strong> {{ project.optimizer_recommendation.tier }}</p>
+        <p><strong>Notes:</strong> {{ project.optimizer_recommendation.notes }}</p>
+
+        <h3>Client Proposal Summary</h3>
+        <p><strong>Client BOM Total:</strong> {{ project.client_bom_total|money }}</p>
+        <p><strong>Design Total:</strong> {{ project.design_total|money }}</p>
+        <p><strong>Maintenance Plan Fee:</strong> {{ project.maintenance_plan_fee|money }}</p>
+        <p><strong>Subscription Cost:</strong> {{ project.subscription_cost|money }}</p>
+        <p><strong>Estimated Client Proposal Total:</strong> {{ project.client_proposal_total|money }}</p>
+    {% else %}
+        <p>No project has been submitted yet. Use the dashboard form to generate a report.</p>
+    {% endif %}
+</div>
+{% endblock %}

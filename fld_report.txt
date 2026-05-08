@@ -1,0 +1,14 @@
+===== FLD SYSTEM REPORT =====
+
+PRIMARY SYSTEM
+Pump: Pump B
+Pipe: 2" PVC
+Final Pressure: 72.99 PSI
+Runtime: 66.67 min
+Cost: $3750.00
+Within Budget: True
+
+SCENARIOS
+Low Cost: Pump=Pump B, Pipe=1.5" PVC, Margin=11.63, Cost=$3550.00, Within Budget=True
+Medium: Pump=Pump B, Pipe=2" PVC, Margin=22.99, Cost=$3750.00, Within Budget=True
+High End: Pump=Pump C - High Pressure, Pipe=1.5" PVC, Margin=41.63, Cost=$5250.00, Within Budget=False

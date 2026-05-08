@@ -1,0 +1,71 @@
+{
+  "project_name": "",
+  "client_name": "",
+  "water_source": "",
+  "target_gpm": 700.0,
+  "target_psi": 180.0,
+  "elevation_gain_ft": 250.0,
+  "elevation_psi_loss": 108.2,
+  "required_pump_psi": 288.2,
+  "hydraulic_hp": 117.7,
+  "markup_percent": 35,
+  "design_hours": 0,
+  "design_hourly_rate": 0,
+  "design_total": 0,
+  "maintenance_plan_fee": 0,
+  "subscription_cost": 0,
+  "bom": [
+    {
+      "item": "Industrial High-Output Pump Package",
+      "qty": 1,
+      "unit_cost": 65000,
+      "internal_total": 65000,
+      "client_unit_price": 87750.0,
+      "client_total": 87750.0,
+      "notes": "Industrial-grade wildfire protection platform"
+    },
+    {
+      "item": "Primary Manifold Assembly",
+      "qty": 2,
+      "unit_cost": 6800,
+      "internal_total": 13600,
+      "client_unit_price": 9180.0,
+      "client_total": 18360.0,
+      "notes": "Industrial Multi-Zone Manifold using estimated 12 active zones and 20 sprinkler heads."
+    },
+    {
+      "item": "Sprinkler / Nozzle Heads",
+      "qty": 20,
+      "unit_cost": 95,
+      "internal_total": 1900,
+      "client_unit_price": 128.25,
+      "client_total": 2565.0,
+      "notes": "Calculated from target flow of 700 GPM using estimated 35 GPM per head."
+    },
+    {
+      "item": "Schedule 80 PVC Main Runs",
+      "qty": 1025,
+      "unit_cost": 11.5,
+      "internal_total": 11787.5,
+      "client_unit_price": 15.53,
+      "client_total": 15918.25,
+      "notes": "4\" Sch 80 PVC selected from 700 GPM system demand and 250 ft elevation gain."
+    },
+    {
+      "item": "Control / Activation Package",
+      "qty": 1,
+      "unit_cost": 1800,
+      "internal_total": 1800,
+      "client_unit_price": 2430.0,
+      "client_total": 2430.0,
+      "notes": "V2 remote operation and system health baseline"
+    }
+  ],
+  "internal_bom_total": 94087.5,
+  "client_bom_total": 127023.25,
+  "client_proposal_total": 127023.25,
+  "optimizer_recommendation": {
+    "tier": "High-output pump package",
+    "notes": "Current estimate suggests a stronger pump package is likely needed because pressure and HP demand are high."
+  }
+}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>Saved Projects</h2>
+    <p>Previously generated FLD project reports, proposals, and export files.</p>
+
+    {% if saved_projects %}
+    <table>
+        <tr>
+            <th>Project File</th>
+            <th>Modified</th>
+            <th>Project Detail</th>
+            <th>Printable Proposal</th>
+            <th>Proposal CSV</th>
+            <th>BOM CSV</th>
+            <th>JSON</th>
+        </tr>
+        {% for project in saved_projects %}
+        <tr>
+            <td>{{ project.filename }}</td>
+            <td>{{ project.modified }}</td>
+            <td><a href="/projects/{{ project.filename }}">Detail</a></td>
+            <td><a href="/projects/{{ project.filename }}/proposal">Proposal</a></td>
+            <td><a href="/projects/{{ project.filename }}/proposal.csv">Proposal CSV</a></td>
+            <td><a href="/projects/{{ project.filename }}/bom.csv">BOM CSV</a></td>
+            <td><a href="/projects/{{ project.filename }}/download">JSON</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No saved projects yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

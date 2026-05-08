@@ -1,0 +1,4 @@
+name,component_type,unit_cost,notes,control_type
+Basic Manual Control Panel,control,500,,manual
+Remote Control Panel,control,1800,,remote
+Automation Ready Control Panel,control,4500,,automation_ready

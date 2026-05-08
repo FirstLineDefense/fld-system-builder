@@ -1,0 +1,15 @@
+name,component_type,unit_cost,notes,diameter_in,internal_diameter_in,wall_type,pressure_rating_psi,c_factor,material
+1in PVC Sch40,pipe,2.5,,1,1.049,Sch40,450,150,PVC
+1in PVC Sch80,pipe,4.5,,1,0.957,Sch80,630,150,PVC
+1.25in PVC Sch40,pipe,3.5,,1.25,1.380,Sch40,370,150,PVC
+1.25in PVC Sch80,pipe,5.5,,1.25,1.278,Sch80,520,150,PVC
+1.5in PVC Sch40,pipe,4.5,,1.5,1.610,Sch40,330,150,PVC
+1.5in PVC Sch80,pipe,7.5,,1.5,1.500,Sch80,470,150,PVC
+2in PVC Sch40,pipe,6.5,,2,2.067,Sch40,280,150,PVC
+2in PVC Sch80,pipe,9.5,,2,1.939,Sch80,400,150,PVC
+2.5in PVC Sch40,pipe,9.5,,2.5,2.469,Sch40,300,150,PVC
+2.5in PVC Sch80,pipe,14.5,,2.5,2.323,Sch80,420,150,PVC
+3in PVC Sch40,pipe,14.5,,3,3.068,Sch40,260,150,PVC
+3in PVC Sch80,pipe,21.5,,3,2.900,Sch80,370,150,PVC
+4in PVC Sch40,pipe,22.5,,4,4.026,Sch40,220,150,PVC
+4in PVC Sch80,pipe,34.5,,4,3.826,Sch80,320,150,PVC

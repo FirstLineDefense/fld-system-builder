@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+.env
+.DS_Store
+flask_debug.log
+
+stable_backups/
+_junk_terminal_artifacts/
+
+exports/
+runtime_data/
+
+*.bak

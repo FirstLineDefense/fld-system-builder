@@ -1,0 +1,6 @@
+name,component_type,unit_cost,notes,sensor_type
+Header Pressure Transducer,sensor,250,,pressure
+Tank Level Sensor,sensor,300,,level
+Flow Meter,sensor,700,,flow
+Temperature Sensor,sensor,150,,temperature
+Smoke Particulate Sensor,sensor,400,,smoke

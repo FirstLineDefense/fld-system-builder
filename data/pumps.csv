@@ -1,0 +1,5 @@
+name,component_type,unit_cost,notes,max_flow_gpm,max_pressure_psi,pump_type,inlet_size_in,outlet_size_in
+Pump A,pump,1200,,100,70,self-priming,2,2
+Pump B,pump,2500,,200,120,self-priming,3,3
+Pump C - High Pressure,pump,4200,,200,150,high-pressure self-priming,3,3
+Pump D - High Flow / High Pressure,pump,6500,,400,150,high-flow self-priming,4,4
