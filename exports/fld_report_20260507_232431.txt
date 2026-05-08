@@ -1,0 +1,49 @@
+===== FLD SYSTEM BUILDER REPORT =====
+
+SYSTEM SUMMARY
+System Passed: False
+Selected Pump: Pump D - High Flow / High Pressure
+Active Branches: 2
+Max Simultaneous Ports: 1
+Total Installed Flow: 420.00 GPM
+Active Operating Flow: 360.00 GPM
+Runtime: 13.89 minutes
+Total Cost: $9420.00
+Within Budget: False
+
+WARNINGS
+- No pump passed all manifold operating-mode requirements. Selected best available pump.
+- Branch 1 does not meet minimum pressure margin.
+- Branch 1 does not meet minimum pressure margin.
+- Operating flow exceeds pump max flow.
+- Operating point is near the curve tail-off zone.
+- Branch 1 does not meet minimum pressure margin.
+- Branch 1 does not meet minimum pressure margin.
+- Branch 2 does not meet minimum pressure margin.
+- Branch 2 does not meet minimum pressure margin.
+- All Active Branches: Pump flow capacity is below mode flow requirement.
+- Pump is operating near the high end of its flow range.
+- Branch 1 does not meet minimum pressure margin.
+- Branch 1 does not meet minimum pressure margin.
+- Pump is operating at very low flow relative to max flow.
+- Foam Mode: No active branches in this mode.
+- At least one max-simultaneous branch combination fails.
+- Water runtime is below required runtime.
+- Water storage does not meet required runtime demand.
+- Selected system exceeds budget.
+
+BRANCH RESULTS
+Branch 1 | Role: first_line | Priority: 2 | Pipe: 2in PVC Sch40 | Length: 100.0 ft | Elevation: 30.0 ft | Flow: 360.00 GPM | Final PSI: 24.52 | Required PSI: 70.00 | Margin: -45.48 | Passed: False
+Branch 2 | Role: last_line | Priority: 1 | Pipe: 2in PVC Sch40 | Length: 102.0 ft | Elevation: 0.0 ft | Flow: 60.00 GPM | Final PSI: 141.73 | Required PSI: 70.00 | Margin: 71.73 | Passed: True
+
+OPERATING MODE CHECKS
+All Active Branches | Passed: False | Branches: 2 | Total Flow: 420.00 GPM | Worst Branch: 1 | Worst Margin: -68.79
+First Line Defense Mode | Passed: False | Branches: 1 | Total Flow: 360.00 GPM | Worst Branch: 1 | Worst Margin: -45.48
+Last Line / Structure Defense Mode | Passed: True | Branches: 1 | Total Flow: 60.00 GPM | Worst Branch: 2 | Worst Margin: 71.73
+Foam Mode | Passed: False | Branches: 0 | Total Flow: 0.00 GPM | Worst Branch: N/A | Worst Margin: N/A
+Max Simultaneous Ports | Passed: False | Branches: 1 | Total Flow: 360.00 GPM | Worst Branch: 1 | Worst Margin: -45.48
+
+SELECTED COMPONENTS / CUT SHEET STARTER
+Pump D - High Flow / High Pressure | Type: pump | Qty: 1 | Unit Cost: $6500.00 | Line Cost: $6500.00
+2in PVC Sch40 | Type: pipe | Qty: 180.0 | Unit Cost: $6.50 | Line Cost: $1170.00
+Aqualine I125A - Medium Flow | Type: terminal | Qty: 7 | Unit Cost: $250.00 | Line Cost: $1750.00
