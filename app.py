@@ -34,6 +34,7 @@ from renderers.branch_results_renderer import build_branch_results_html
 from renderers.operating_modes_renderer import build_operating_modes_html
 from renderers.selected_components_renderer import build_selected_components_html
 from renderers.storage_power_renderer import build_storage_power_html
+from renderers.engineering_recommendations_renderer import build_engineering_recommendations_html
 
 
 def _legacy_to_dict(value):
