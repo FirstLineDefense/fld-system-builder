@@ -18,6 +18,62 @@ from renderers.intelligence.auto_select_summary_renderer import build_auto_selec
 from renderers.intelligence.overall_readiness_banner_renderer import build_overall_readiness_banner_html
 from renderers.intelligence.design_maturity_renderer import build_design_maturity_html
 from services.presentation.proposal_page_service import compose_project_report_page
+from renderers.constraint_violation_renderer import build_constraint_violation_html as _build_constraint_violation_html
+from renderers.intelligence.design_direction_renderer import build_design_direction_html
+from renderers.intelligence.auto_select_summary_renderer import build_auto_select_summary_html
+from renderers.intelligence.design_maturity_renderer import build_design_maturity_html
+from renderers.intelligence.section_readiness_renderer import build_section_readiness_html
+from renderers.intelligence.guided_builder_summary_renderer import build_guided_builder_summary_html
+from renderers.intelligence.overall_readiness_banner_renderer import build_overall_readiness_banner_html
+from renderers.intelligence.bottleneck_intelligence_renderer import build_bottleneck_intelligence_html
+from renderers.intelligence.design_readiness_renderer import build_design_readiness_html
+from renderers.intelligence.scenario_comparison_renderer import build_scenario_comparison_html
+from renderers.intelligence.architecture_recommendations_renderer import build_architecture_recommendations_html
+from renderers.auto_apply_renderer import build_auto_apply_html
+
+
+def _legacy_to_dict(value):
+    if value is None:
+        return {}
+    if isinstance(value, dict):
+        return value
+    if hasattr(value, "__dict__"):
+        return dict(value.__dict__)
+    return value
+
+
+def _normalize_primary_for_extracted_renderers(primary):
+    if not isinstance(primary, dict):
+        return primary
+
+    normalized = dict(primary)
+
+    for key in [
+        "pump",
+        "engine",
+        "motor",
+        "water_storage",
+        "fuel_storage",
+        "battery",
+        "generator",
+    ]:
+        if key in normalized:
+            normalized[key] = _legacy_to_dict(normalized[key])
+
+    return normalized
+
+
+def build_constraint_violation_html(primary):
+    normalized_primary = _normalize_primary_for_extracted_renderers(primary)
+    violations = (
+        normalized_primary.get("constraint_violations")
+        or normalized_primary.get("violations")
+        or normalized_primary.get("constraint_violation_summary")
+        or []
+    )
+    return _build_constraint_violation_html(normalized_primary, violations)
+
+
 
 
 PORT = 8018

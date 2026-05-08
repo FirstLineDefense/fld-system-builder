@@ -6,6 +6,7 @@ from webapp.routes.component_routes import component_bp
 from webapp.routes.core_routes import core_bp
 from webapp.routes.optimizer_routes import optimizer_bp
 from webapp.routes.project_routes import project_bp
+from webapp.routes.legacy_builder_routes import legacy_builder_bp
 from webapp.routes.report_routes import report_bp
 
 
@@ -30,5 +31,6 @@ def create_app():
     app.register_blueprint(optimizer_bp)
     app.register_blueprint(report_bp)
     app.register_blueprint(project_bp)
+    app.register_blueprint(legacy_builder_bp)
 
     return app

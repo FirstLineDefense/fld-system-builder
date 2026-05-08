@@ -1,0 +1,87 @@
+{
+  "source": "write_export_files",
+  "generated_at": "2026-05-08T06:20:06.384184Z",
+  "pump": {
+    "name": "Pump D - High Flow / High Pressure",
+    "gpm": null,
+    "cost": null
+  },
+  "motor": {
+    "name": "Unknown Motor",
+    "hp": null,
+    "cost": null
+  },
+  "branches": [
+    {
+      "branch_number": 1,
+      "name": "first_line",
+      "role": "first_line",
+      "priority": 2,
+      "pipe_name": "2in PVC Sch40",
+      "pipe_size": null,
+      "pipe_type": null,
+      "pipe_length_ft": 1000.0,
+      "elevation_change_ft": 26.0,
+      "target_gpm": 300.0,
+      "final_pressure_psi": -129.76361946180324,
+      "required_terminal_pressure_psi": 70.0,
+      "pressure_margin_psi": -199.76361946180324,
+      "velocity_fps": 28.683232861440136,
+      "passed": false,
+      "sprinkler_count": 0,
+      "elbow_90_qty": 0,
+      "tee_qty": 0,
+      "valve_qty": 0
+    },
+    {
+      "branch_number": 2,
+      "name": "last_line",
+      "role": "last_line",
+      "priority": 1,
+      "pipe_name": "2in PVC Sch40",
+      "pipe_size": null,
+      "pipe_type": null,
+      "pipe_length_ft": 102.0,
+      "elevation_change_ft": 0,
+      "target_gpm": 60.0,
+      "final_pressure_psi": 141.73259467338676,
+      "required_terminal_pressure_psi": 70.0,
+      "pressure_margin_psi": 71.73259467338676,
+      "velocity_fps": 5.736646572288027,
+      "passed": true,
+      "sprinkler_count": 0,
+      "elbow_90_qty": 2,
+      "tee_qty": 1,
+      "valve_qty": 1
+    }
+  ],
+  "summary": {
+    "system_passed": false,
+    "within_budget": false,
+    "warnings": [
+      "No pump passed all manifold operating-mode requirements. Selected best available pump.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Pump is operating near the high end of its flow range.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Branch 2 does not meet minimum pressure margin.",
+      "Branch 2 does not meet minimum pressure margin.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Branch 1 does not meet minimum pressure margin.",
+      "Pump is operating at very low flow relative to max flow.",
+      "Foam Mode: No active branches in this mode.",
+      "At least one max-simultaneous branch combination fails.",
+      "Water runtime is below required runtime.",
+      "Water storage does not meet required runtime demand.",
+      "Selected system exceeds budget."
+    ],
+    "runtime_minutes": 16.666666666666668,
+    "total_cost": 15020.0,
+    "total_installed_flow_gpm": 360.0,
+    "total_flow_gpm": 300.0,
+    "active_branch_count": 2,
+    "max_simultaneous_ports": 1
+  },
+  "optimizer_result": null
+}

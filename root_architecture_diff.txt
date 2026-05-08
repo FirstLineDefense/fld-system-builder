@@ -1,0 +1,10 @@
+Files ../fld-system-builder/.git/config and ./.git/config differ
+Only in ../fld-system-builder: config
+Only in ../fld-system-builder: domain
+Only in ../fld-system-builder: engines
+Only in ../fld-system-builder: renderers
+Only in ../fld-system-builder: repositories
+Only in .: static_diff.txt
+Only in ../fld-system-builder: tested_config_logic.py
+Only in ./webapp/routes: __init__.py
+Only in .: webapp_diff.txt

@@ -1,0 +1,4 @@
+Component,Component Type,Quantity,Unit Cost,Line Cost,Notes
+Pump D - High Flow / High Pressure,pump,1,6500.0,6500.0,
+2in PVC Sch40,pipe,1080.0,6.5,7020.0,
+Aqualine I125A - Medium Flow,terminal,6,250.0,1500.0,Aqualine I125A placeholder medium-flow setting

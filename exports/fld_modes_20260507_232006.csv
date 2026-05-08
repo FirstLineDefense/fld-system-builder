@@ -1,0 +1,6 @@
+Mode,Passed,Branch Count,Total Flow GPM,Worst Branch,Worst Margin PSI
+All Active Branches,False,2,360.0,1,-302.90264561707306
+First Line Defense Mode,False,1,300.0,1,-199.76361946180324
+Last Line / Structure Defense Mode,True,1,60.0,2,71.73259467338676
+Foam Mode,False,0,0,N/A,N/A
+Max Simultaneous Ports,False,1,300.0,1,-199.76361946180324
