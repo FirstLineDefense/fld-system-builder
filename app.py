@@ -32,6 +32,8 @@ from renderers.intelligence.architecture_recommendations_renderer import build_a
 from renderers.auto_apply_renderer import build_auto_apply_html
 from renderers.branch_results_renderer import build_branch_results_html
 from renderers.operating_modes_renderer import build_operating_modes_html
+from renderers.selected_components_renderer import build_selected_components_html
+from renderers.storage_power_renderer import build_storage_power_html
 
 
 def _legacy_to_dict(value):
@@ -1312,58 +1314,9 @@ def build_results_html(result, export_paths=None):
 
     html += build_operating_modes_html(manifold)
 
-    html += "<h2>Selected Components / Cut Sheet Starter</h2>"
-    html += "<table>"
-    html += "<tr><th>Component</th><th>Type</th><th>Quantity</th><th>Unit Cost</th><th>Line Cost</th></tr>"
+    html += build_selected_components_html(primary)
 
-    for item in primary["selected_components"]:
-        component = item["component"]
-        quantity = item["quantity"]
-        line_cost = component.unit_cost * quantity
-
-        component_name = component.name
-        auto_selected = primary.get("auto_selected", {})
-
-        if component.component_type == "pump" and auto_selected.get("pump"):
-            component_name += " (Auto Selected)"
-
-        if component.component_type == "water_storage" and auto_selected.get("water_storage"):
-            component_name += " (Auto Selected)"
-
-        html += "<tr>"
-        html += f"<td>{component_name}</td>"
-        html += f"<td>{component.component_type}</td>"
-        html += f"<td>{quantity}</td>"
-        html += f"<td>${component.unit_cost:.2f}</td>"
-        html += f"<td>${line_cost:.2f}</td>"
-        html += "</tr>"
-
-    html += "</table>"
-
-    html += "<h2>Storage / Power Checks</h2>"
-    html += "<table>"
-    html += "<tr><th>Check</th><th>Status</th><th>Details</th></tr>"
-
-    water = primary["water_storage_analysis"]
-    auto_selected = primary.get("auto_selected", {})
-
-    water_label = "Water Storage"
-
-    if auto_selected.get("water_storage"):
-        water_label = "Water Storage (Auto Selected)"
-
-    html += f"<tr><td>{water_label}</td><td>{water['passed']}</td><td>Capacity: {water['capacity_gallons']} gal | Required: {water['required_gallons']} gal | Margin: {water['margin_gallons']}</td></tr>"
-
-    fuel = primary["fuel_runtime_analysis"]
-    html += f"<tr><td>Fuel Runtime</td><td>{fuel['passed']}</td><td>Runtime: {fuel['runtime_hours']} hr | Required: {fuel['required_runtime_hours']:.2f} hr</td></tr>"
-
-    battery = primary["battery_runtime_analysis"]
-    html += f"<tr><td>Battery Runtime</td><td>{battery['passed']}</td><td>Runtime: {battery['runtime_hours']} hr | Required: {battery['required_runtime_hours']:.2f} hr | Motor kW: {battery['motor_kw_required']}</td></tr>"
-
-    generator = primary["generator_analysis"]
-    html += f"<tr><td>Generator Support</td><td>{generator['passed']}</td><td>Generator kW: {generator['generator_kw']} | Motor kW Required: {generator['motor_kw_required']}</td></tr>"
-
-    html += "</table>"
+    html += build_storage_power_html(primary)
     html += "</div>"
 
     return html
