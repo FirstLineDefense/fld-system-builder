@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template
 
 core_bp = Blueprint("core", __name__)
 
 
 @core_bp.route("/")
 def dashboard():
-    return redirect("/optimizer")
+    return render_template("dashboard.html")
 
 
 @core_bp.route("/tools")
