@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+
 {% block content %}
 <div class="card">
     <h2>Components</h2>
-    <p>Current component library used by the report BOM.</p>
 
     <table>
         <tr>
@@ -11,14 +11,16 @@
             <th>Unit Cost</th>
             <th>Notes</th>
         </tr>
-        {% for key, component in components.items() %}
+
+        {% for component in components or [] %}
         <tr>
-            <td>{{ key }}</td>
-            <td>{{ component.get('item', '') }}</td>
-            <td>{{ component.get('unit_cost', 0)|money }}</td>
-            <td>{{ component.get('notes', '') }}</td>
+            <td>{{ component.get('key','') }}</td>
+            <td>{{ component.get('item','') }}</td>
+            <td>{{ component.get('unit_cost',0)|money }}</td>
+            <td>{{ component.get('notes','') }}</td>
         </tr>
         {% endfor %}
+
     </table>
 </div>
 {% endblock %}
