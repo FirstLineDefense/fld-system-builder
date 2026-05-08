@@ -21,3 +21,48 @@ The FLD platform will progressively extract business logic into dedicated servic
 
 ```text
 services/
+The service layer becomes responsible for:
+
+- business logic
+- orchestration logic
+- engineering workflows
+- proposal generation logic
+- optimization coordination
+- runtime coordination
+- reusable processing pipelines
+
+## Reasoning
+
+Separating logic into services improves:
+
+- maintainability
+- testing capability
+- subsystem isolation
+- future scalability
+- deployment stability
+- onboarding clarity
+
+The refactor will occur incrementally while preserving operational continuity.
+
+## Consequences
+
+### Positive Outcomes
+
+- improved modularity
+- improved maintainability
+- cleaner separation of concerns
+- easier future subsystem replacement
+
+### Accepted Tradeoffs
+
+- temporary hybrid architecture
+- staged migration complexity
+- partial duplication during extraction
+
+## Related Systems
+
+- services/
+- renderers/
+- webapp/
+- optimizer systems
+- runtime systems
