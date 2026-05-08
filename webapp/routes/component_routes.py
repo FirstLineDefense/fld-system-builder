@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-components_bp = Blueprint("components", __name__)
+component_bp = Blueprint("components", __name__)
 
 COMPONENT_LIBRARY = [
     {
