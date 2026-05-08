@@ -38,6 +38,8 @@ from renderers.engineering_recommendations_renderer import build_engineering_rec
 from renderers.optimizer_recommendation_renderer import build_optimizer_recommendation_html
 from renderers.hydraulic_intelligence_renderer import build_hydraulic_intelligence_html
 from renderers.system_curve_overlay_renderer import build_system_curve_overlay_html
+from renderers.hydraulic_optimizer_renderer import build_hydraulic_optimizer_html
+from renderers.system_builder_page_renderer import build_system_builder_page_html
 
 
 def _legacy_to_dict(value):
@@ -825,104 +827,6 @@ def build_export_links(export_paths):
 
 
 
-def build_hydraulic_optimizer_html(primary):
-    optimizer = primary.get("hydraulic_optimizer", {})
-
-    html = "<h2>Hydraulic Optimizer</h2>"
-    html += f"<p><strong>Status:</strong> {optimizer.get('status', 'Not Available')}</p>"
-    html += f"<p><strong>Summary:</strong> {optimizer.get('summary', '')}</p>"
-
-    governing = optimizer.get("governing_branch")
-
-    html += "<h3>Governing Branch</h3>"
-    html += "<table>"
-    html += "<tr><th>Branch</th><th>Role</th><th>Pipe</th><th>Final PSI</th><th>Required PSI</th><th>Margin</th><th>Recommendation</th></tr>"
-
-    if governing:
-        html += "<tr>"
-        html += f"<td>{governing.get('branch_number')}</td>"
-        html += f"<td>{governing.get('role')}</td>"
-        html += f"<td>{governing.get('pipe_name')}</td>"
-        html += f"<td>{governing.get('final_pressure_psi'):.2f}</td>"
-        html += f"<td>{governing.get('required_terminal_pressure_psi'):.2f}</td>"
-        html += f"<td>{governing.get('pressure_margin_psi'):.2f}</td>"
-        html += f"<td>{governing.get('recommendation')}</td>"
-        html += "</tr>"
-    else:
-        html += "<tr><td colspan='7'>No governing branch identified.</td></tr>"
-
-    html += "</table>"
-
-    html += "<h3>Best Actions</h3>"
-    html += "<table>"
-    html += "<tr><th>Priority</th><th>Action</th><th>Details</th></tr>"
-
-    for item in optimizer.get("best_actions", []):
-        html += "<tr>"
-        html += f"<td>{item.get('priority')}</td>"
-        html += f"<td>{item.get('action')}</td>"
-        html += f"<td>{item.get('details')}</td>"
-        html += "</tr>"
-
-    html += "</table>"
-
-    html += "<h3>Pipe Upgrade Trials</h3>"
-    html += "<table>"
-    html += "<tr><th>Branch</th><th>Current</th><th>Trial Pipe</th><th>Base Margin</th><th>Trial Margin</th><th>Gain</th><th>Base Velocity</th><th>Trial Velocity</th><th>Passed?</th><th>Best Value?</th><th>Reasoning</th><th>Recommendation</th></tr>"
-
-    trials = optimizer.get("pipe_upgrade_trials", [])
-
-    if trials:
-        for item in trials:
-            reasoning_items = item.get("engineering_reasoning", [])
-            reasoning_html = "<br>".join(reasoning_items)
-
-            best_value = "Yes" if item.get("minimum_viable") else ""
-
-            html += "<tr>"
-            html += f"<td>{item.get('branch_number')}</td>"
-            html += f"<td>{item.get('current_pipe')}</td>"
-            html += f"<td>{item.get('recommended_pipe')}</td>"
-            html += f"<td>{item.get('baseline_margin_psi'):.2f}</td>"
-            html += f"<td>{item.get('trial_margin_psi'):.2f}</td>"
-            html += f"<td>{item.get('margin_gain_psi'):.2f}</td>"
-            html += f"<td>{item.get('baseline_velocity_fps'):.2f}</td>"
-            html += f"<td>{item.get('trial_velocity_fps'):.2f}</td>"
-            html += f"<td>{item.get('trial_passed')}</td>"
-            html += f"<td>{best_value}</td>"
-            html += f"<td>{reasoning_html}</td>"
-            html += f"<td>{item.get('recommendation')}</td>"
-            html += "</tr>"
-    else:
-        html += "<tr><td colspan='12'>No pipe upgrade trials generated.</td></tr>"
-
-    html += "</table>"
-
-    html += "<h3>Combined Pipe Upgrade Trial</h3>"
-    combined = optimizer.get("combined_pipe_upgrade_trial")
-
-    if combined:
-        html += f"<p><strong>Passed:</strong> {combined.get('passed')}</p>"
-        html += f"<p><strong>Last-Line Passed:</strong> {combined.get('last_line_passed')}</p>"
-        html += f"<p><strong>Trial Total Flow:</strong> {combined.get('trial_total_flow_gpm'):.2f} GPM</p>"
-        html += f"<p><strong>Failing Branch Count:</strong> {combined.get('trial_failing_branch_count')}</p>"
-        html += f"<p><strong>Recommendation:</strong> {combined.get('recommendation')}</p>"
-
-        html += "<table>"
-        html += "<tr><th>Branch</th><th>Current Pipe</th><th>Recommended Pipe</th></tr>"
-
-        for change in combined.get("changes", []):
-            html += "<tr>"
-            html += f"<td>{change.get('branch_number')}</td>"
-            html += f"<td>{change.get('current_pipe')}</td>"
-            html += f"<td>{change.get('recommended_pipe')}</td>"
-            html += "</tr>"
-
-        html += "</table>"
-    else:
-        html += "<p>No combined pipe upgrade trial generated.</p>"
-
-    return html
 
 
 
@@ -1331,6 +1235,7 @@ def build_field_suggestion_html(builder_suggestions, field_name):
     </div>
     """
 
+
 def build_system_builder_page(results="", initial_data=None):
     library = get_component_library()
 
@@ -1338,11 +1243,12 @@ def build_system_builder_page(results="", initial_data=None):
         initial_data = {}
 
     branches = initial_data.get("branches", [])
+
     builder_suggestions = initial_data.get(
         "builder_suggestions",
         {}
     )
-    
+
     branch_count = max(
         [int(b.get("branch_number", 1)) for b in branches],
         default=1
@@ -1350,8 +1256,15 @@ def build_system_builder_page(results="", initial_data=None):
 
     branch_template = build_branch_template(library)
 
-    last_updated_section = initial_data.get("last_updated_section", "")
-    section_update_changes = initial_data.get("section_update_changes", [])
+    last_updated_section = initial_data.get(
+        "last_updated_section",
+        ""
+    )
+
+    section_update_changes = initial_data.get(
+        "section_update_changes",
+        []
+    )
 
     update_message = ""
 
@@ -1374,154 +1287,27 @@ def build_system_builder_page(results="", initial_data=None):
         </div>
         """
 
-    body = f"""
-<form method="POST" action="/">
+    body = build_system_builder_page_html(
+        library=library,
+        initial_data=initial_data,
+        results=results,
+        branch_template=branch_template,
+        branch_count=branch_count,
+        update_message=update_message,
+        builder_suggestions=builder_suggestions,
+        get_section_class=get_section_class,
+        build_section_update_button=build_section_update_button,
+        build_field_suggestion_html=build_field_suggestion_html,
+        build_options=build_options,
+        build_branch_inputs=build_branch_inputs,
+        build_line_item_rows=build_line_item_rows,
+    )
 
-{update_message}
-
-<div class="{get_section_class(initial_data, "system_drive")}">
-<h2>System Drive</h2>
-{build_section_update_button("system_drive")}
-
-<label>Pump</label>
-<select name="pump_name">
-<option value="Auto Select Pump" {"selected" if initial_data.get("pump_name", "Auto Select Pump") == "Auto Select Pump" else ""}>Auto Select Pump</option>
-{build_options(library["pumps"], include_none=False, selected_name=initial_data.get("pump_name", "Auto Select Pump"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "pump_name")}
-
-<label>Engine</label>
-<select name="engine_name">
-<option value="Auto Select Engine" {"selected" if initial_data.get("engine_name", "None") == "Auto Select Engine" else ""}>Auto Select Engine</option>
-{build_options(library["engines"], selected_name=initial_data.get("engine_name", "None"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "engine_name")}
-
-<label>Motor</label>
-<select name="motor_name">
-<option value="Auto Select Motor" {"selected" if initial_data.get("motor_name", "None") == "Auto Select Motor" else ""}>Auto Select Motor</option>
-{build_options(library["motors"], selected_name=initial_data.get("motor_name", "None"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "motor_name")}
-
-<label>Fuel Storage</label>
-<select name="fuel_storage_name">
-<option value="Auto Select Fuel Storage" {"selected" if initial_data.get("fuel_storage_name", "None") == "Auto Select Fuel Storage" else ""}>Auto Select Fuel Storage</option>
-{build_options(library["fuel_storage"], selected_name=initial_data.get("fuel_storage_name", "None"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "fuel_storage_name")}
-
-<label>Generator</label>
-<select name="generator_name">
-<option value="Auto Select Generator" {"selected" if initial_data.get("generator_name", "None") == "Auto Select Generator" else ""}>Auto Select Generator</option>
-{build_options(library["generators"], selected_name=initial_data.get("generator_name", "None"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "generator_name")}
-
-<label>Battery</label>
-<select name="battery_name">
-<option value="Auto Select Battery" {"selected" if initial_data.get("battery_name", "None") == "Auto Select Battery" else ""}>Auto Select Battery</option>
-{build_options(library["batteries"], selected_name=initial_data.get("battery_name", "None"))}
-</select>
-
-{build_field_suggestion_html(builder_suggestions, "battery_name")}
-
-<div class="{get_section_class(initial_data, "water_runtime")}">
-<h2>Water + Runtime</h2>
-{build_section_update_button("water_runtime")}
-
-<label>Available Water (gallons)</label>
-<input type="number" name="available_water_gallons" value="{initial_data.get("available_water_gallons", 5000)}">
-
-<label>Required Runtime (minutes)</label>
-<input type="number" name="required_runtime_minutes" value="{initial_data.get("required_runtime_minutes", 60)}">
-
-<label>Water Storage</label>
-<select name="water_storage_name">
-<option value="Auto Select Water Storage" {"selected" if initial_data.get("water_storage_name", "None") == "Auto Select Water Storage" else ""}>Auto Select Water Storage</option>
-{build_options(library["water_storage"], selected_name=initial_data.get("water_storage_name", "None"))}
-</select>
-{build_field_suggestion_html(builder_suggestions, "water_storage_name")}
-</div>
-
-<div class="{get_section_class(initial_data, "manifold_branches")}">
-<h2>Manifold + Branches</h2>
-{build_section_update_button("manifold_branches")}
-
-<input type="hidden" id="branch_count" name="branch_count" value="{branch_count}">
-
-<label>Maximum Manifold Ports Intended to Run at Once</label>
-<input type="number" name="max_simultaneous_ports" value="{initial_data.get("max_simultaneous_ports", 1)}">
-
-<label>Minimum Pressure Margin (PSI)</label>
-<input type="number" name="minimum_pressure_margin_psi" value="{initial_data.get("minimum_pressure_margin_psi", 20)}">
-<label>Preferred Velocity Target (ft/s)</label>
-<input type="number" step="0.1" name="preferred_velocity_fps" value="{initial_data.get("preferred_velocity_fps", 8)}">
-<label>Maximum Velocity Warning (ft/s)</label>
-<input type="number" step="0.1" name="maximum_velocity_fps" value="{initial_data.get("maximum_velocity_fps", 10)}">
-
-{build_branch_inputs(library, initial_data)}
-</div>
-
-<div class="{get_section_class(initial_data, "controls")}">
-<h2>Controls</h2>
-{build_section_update_button("controls")}
-
-{build_field_suggestion_html(
-    builder_suggestions,
-    "selected_controls"
-)}
-
-<p>Select up to three controls for now.</p>
-
-{build_line_item_rows(
-    library["controls"],
-    "control",
-    3,
-    initial_data.get("selected_controls", [])
-)}
-</div>
-
-<div class="{get_section_class(initial_data, "sensors")}">
-<h2>Sensors</h2>
-{build_section_update_button("sensors")}
-
-{build_field_suggestion_html(
-    builder_suggestions,
-    "selected_sensors"
-)}
-
-<p>Select up to five sensor types for now.</p>
-
-{build_line_item_rows(
-    library["sensors"],
-    "sensor",
-    5,
-    initial_data.get("selected_sensors", [])
-)}
-</div>
-
-<div class="{get_section_class(initial_data, "budget")}">
-<h2>Budget</h2>
-{build_section_update_button("budget")}
-<label>Max Budget ($)</label>
-<input type="number" name="max_budget" value="{initial_data.get("max_budget", 4000)}">
-</div>
-
-<br>
-<button type="submit">Run System Builder</button>
-
-</form>
-
-{results}
-"""
-
-    return build_page("FLD Operating Mode System Builder V2.7", body, branch_template)
+    return build_page(
+        "FLD Operating Mode System Builder V2.7",
+        body,
+        branch_template
+    )
 
 
 def build_component_manager_page(message=""):
