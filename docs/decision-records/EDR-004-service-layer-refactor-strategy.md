@@ -21,6 +21,8 @@ The FLD platform will progressively extract business logic into dedicated servic
 
 ```text
 services/
+
+
 The service layer becomes responsible for:
 
 - business logic
