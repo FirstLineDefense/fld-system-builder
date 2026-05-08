@@ -55,10 +55,21 @@ def build_engineering_recommendations_html(recommendations):
             f"{recommendation.get('action_label', 'Review Recommendation')}</p>"
         )
 
+        can_auto_update = recommendation.get("can_auto_update", False)
+        action_code = recommendation.get("action_code", "")
+
         html += (
             f"<p><strong>Auto Update Ready:</strong> "
-            f"{recommendation.get('can_auto_update', False)}</p>"
+            f"{can_auto_update}</p>"
         )
+
+        if can_auto_update and action_code:
+            html += (
+                "<form method='post' action='/builder-v27' style='margin-top:10px;'>"
+                f"<input type='hidden' name='action_code' value='{action_code}'>"
+                "<button type='submit'>Apply Recommendation</button>"
+                "</form>"
+            )
 
         html += "</div>"
 

@@ -3,6 +3,7 @@ from flask import Blueprint, request
 from main import run_system, run_auto_update
 from export_utils import write_export_files
 from app import build_system_builder_page
+from renderers.system_builder_page_renderer import build_system_builder_page_html
 
 legacy_builder_bp = Blueprint("legacy_builder", __name__)
 
@@ -90,11 +91,19 @@ def builder_v27():
         )
         result = auto.get("result", result)
 
+    render_result = result.get("primary", result)
+
+    if isinstance(render_result, dict):
+        render_result["engineering_recommendations"] = result.get(
+            "engineering_recommendations",
+            render_result.get("engineering_recommendations", [])
+        )
+
     export_paths = write_export_files(form_data, result)
     result["export_paths"] = export_paths
 
     html = build_system_builder_page(
-        results=result,
+        results=render_result,
         initial_data=form_data
     )
 

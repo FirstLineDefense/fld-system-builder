@@ -895,6 +895,10 @@ def build_results_html(result, export_paths=None):
     html += "<h2>Primary System Result</h2>"
     html += f"<p><strong>System Passed:</strong> {primary['summary']['system_passed']}</p>"
     html += build_design_maturity_html(design_maturity)
+
+    if not engineering_recommendations and isinstance(results, dict):
+        engineering_recommendations = results.get("engineering_recommendations", [])
+
     html += build_engineering_recommendations_html(engineering_recommendations)
 
     auto_selected = primary.get("auto_selected", {})
