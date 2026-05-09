@@ -573,6 +573,17 @@ def run_system(input_data):
         }
     )
 
+    try:
+        from pump_curve import get_pump_curve_points
+        if primary.get("pump"):
+            primary["pump_curve_analysis"] = get_pump_curve_points(primary.get("pump"))
+    except Exception as e:
+        primary["pump_curve_analysis"] = {
+            "curve_source": "curve_analysis_error",
+            "curve_points": [],
+            "validation_warnings": [str(e)]
+        }
+
     return {
         "primary": primary,
         "scenarios": [],
