@@ -85,12 +85,11 @@ def builder_v27():
     update_section = form_data.get("update_section")
 
     if update_section:
-        form_data["last_updated_section"] = update_section
-        form_data["section_update_changes"] = [
-            "Section update request received.",
-            "Builder re-ran with current section inputs.",
-            "Review updated recommendations and results below."
-        ]
+        from section_update_recommendations import apply_section_update_recommendation
+        form_data = apply_section_update_recommendation(
+            form_data,
+            update_section
+        )
 
     result = run_system(form_data)
 
