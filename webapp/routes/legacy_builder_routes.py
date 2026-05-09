@@ -82,6 +82,16 @@ def builder_v27():
     form_data = _form_to_dict(request.form)
     form_data = _normalize_types(form_data)
 
+    update_section = form_data.get("update_section")
+
+    if update_section:
+        form_data["last_updated_section"] = update_section
+        form_data["section_update_changes"] = [
+            "Section update request received.",
+            "Builder re-ran with current section inputs.",
+            "Review updated recommendations and results below."
+        ]
+
     result = run_system(form_data)
 
     if form_data.get("action_code"):
