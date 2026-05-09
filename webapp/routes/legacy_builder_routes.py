@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from main import run_system, run_auto_update
 from export_utils import write_export_files
-from app import build_system_builder_page
+from app import build_system_builder_page, build_results_html
 from renderers.system_builder_page_renderer import build_system_builder_page_html
 
 legacy_builder_bp = Blueprint("legacy_builder", __name__)
@@ -133,8 +133,10 @@ def builder_v27():
     export_paths = write_export_files(form_data, result)
     result["export_paths"] = export_paths
 
+    results_html = build_results_html(result, export_paths)
+
     html = build_system_builder_page(
-        results=render_result,
+        results=results_html,
         initial_data=form_data
     )
 
