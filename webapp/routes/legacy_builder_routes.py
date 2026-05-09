@@ -52,6 +52,18 @@ def _normalize_types(data):
     if "max_budget" in data:
         data["max_budget"] = to_float(data["max_budget"])
 
+    if "minimum_pressure_margin_psi" in data:
+        data["minimum_pressure_margin_psi"] = to_float(data["minimum_pressure_margin_psi"])
+
+    if "preferred_velocity_fps" in data:
+        data["preferred_velocity_fps"] = to_float(data["preferred_velocity_fps"])
+
+    if "maximum_velocity_fps" in data:
+        data["maximum_velocity_fps"] = to_float(data["maximum_velocity_fps"])
+
+    if "max_simultaneous_ports" in data:
+        data["max_simultaneous_ports"] = to_int(data["max_simultaneous_ports"])
+
     return data
 
 
