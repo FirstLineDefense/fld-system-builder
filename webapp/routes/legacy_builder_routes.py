@@ -105,6 +105,16 @@ def builder_v27():
 
     result = run_system(form_data)
 
+    form_data["builder_suggestions"] = result.get(
+        "builder_suggestions",
+        {}
+    )
+
+    form_data["section_statuses"] = result.get(
+        "section_statuses",
+        {}
+    )
+
     if form_data.get("action_code"):
         auto = run_auto_update(
             input_data=form_data,
